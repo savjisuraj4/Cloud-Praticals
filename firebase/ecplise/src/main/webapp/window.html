@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+          <meta charset="UTF-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="index.css">
+          <title>Firebase Login</title>
+          <!-- Firebase App is always required and must be first -->
+          <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+          <!-- Add additional services you want to use -->
+          <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-auth.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+          <script>
+                    const firebaseConfig = {
+                              apiKey: "AIzaSyA7wbYjgBwUebRhql1If9xapndCGDZTsN4",
+                              authDomain: "teitb81-cloud-assignment.firebaseapp.com",
+                              projectId: "teitb81-cloud-assignment",
+                              storageBucket: "teitb81-cloud-assignment.appspot.com",
+                              messagingSenderId: "847271406253",
+                              appId: "1:847271406253:web:5746e5dc8d0523bb8d3424",
+                              measurementId: "G-5E1C0LLNBL"
+                    };
+                    const app = firebase.initializeApp(firebaseConfig);
+                    const auth = firebase.auth()
+                    const db=firebase.firestore(app);
+                    
+                    function saveNotes(){
+                              const note=document.getElementById("noteInput").value;
+                              var collection=db.collection("My Notes")
+                              collection.doc("notes").set({
+                                        Note:note,
+                                        date:new Date()
+                              })
+                              .then((result)=>{
+                                        alert("Notes Added Successfully");
+                              })
+                              .catch((error)=>{
+                                        alert(error);
+                              })
+                    }
+
+                    function logout(){
+                              auth.signOut()
+                              .then(()=>{
+                                        alert("Logged Out Successfully");
+                                        window.location.href="./index.html"
+
+                              })
+                              .catch((err)=>{
+                                        alert(err)
+                              })
+                    }
+          </script>
+</head>
+
+<body>
+          <div style="width: 80%; display: flex; justify-content: center;text-align: center;margin-left: 13%;
+          margin-top: 105px;">
+                    <div class="login"style="width: 100%;display: flex;flex-direction: column; gap: 5px;margin: 0% 415px;">
+                              <div>
+                                        <h2>Add notes</h2>
+
+                              </div>
+                              <div class="noteeditor">
+                                        <textarea class="textarea" placeholder="Notes" id="noteInput"></textarea>
+                              </div>
+                              <div class="buttonCss">
+                                       
+                                        <div style="display: flex; flex-direction: row;justify-content: center;">
+                                                  <button onclick="saveNotes()" style="background-color: green;"
+                                                            id="signin">Save</button>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row;justify-content: center;">
+                                                  <button onclick="logout()" style="background-color: red"
+                                                            id="signin">Logout</button>
+                                        </div>
+                              </div>
+                    </div>
+
+
+          </div>
+
+
+          
+</body>
+
+</html>
